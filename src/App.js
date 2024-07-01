@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter, Routes,Route} from "react-router-dom"
+import Navbar from './components/Navbar';
+import Questions from './components/Questions';
+import Startquiz from './components/Startquiz';
+import About from './components/About';
+import Support from './components/Support';
+
+function MainApp() {
+  return(
+    <Routes>
+      <Route path='/questions' element={<Questions/>} />
+      <Route path='/startquiz' element={<Startquiz/>} />
+      <Route path='/about' element={<About/>} />
+      <Route path='/support' element={<Support/>} />
+    </Routes>
+  )
+}
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Navbar/>
+        <MainApp/>
+      </BrowserRouter>
     </div>
   );
 }
