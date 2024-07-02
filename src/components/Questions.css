@@ -1,0 +1,6 @@
+
+
+.category-lists {
+    display: block; /* Ensure each list item takes up the full width of the parent */
+    margin-bottom: 10px; /* Optional: Add space between list items */
+}
