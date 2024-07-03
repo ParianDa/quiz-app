@@ -4,6 +4,8 @@ import "./Questions.css";
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [catQues, setCatQues] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [isCorrect, setIsCorrect] = useState(null);
 
   async function fetchQuestions() {
     try {
@@ -30,6 +32,8 @@ const Questions = () => {
       const shuffledAnswers = shuffleArray(allAnswers);
       // Add the shuffled answers to the selected question
       setCatQues({ ...selectedQues, shuffledAnswers });
+      setSelectedAnswer("");
+      setIsCorrect(null);
     }
   }
 
@@ -42,36 +46,56 @@ const Questions = () => {
     return array.sort(() => Math.random() - 0.5);
   }
 
+  function checkAnswer() {
+    if(catQues && selectedAnswer) {
+      const result = catQues.correctAnswer === selectedAnswer;
+      setIsCorrect(result)
+      console.log(result ? "true" : "false")
+    }
+  }
+
+  function handleSelectedanswers(event) {
+    setSelectedAnswer(event.target.value)
+  }
+
   return (
-    <div>
+    <div className="container">
       <button onClick={fetchQuestions}>Generate Question</button>
       <br />
       <br />
-      <div>
+      <div className="category-container">
         {questions.map((ques) => (
-          <label key={ques.id} className="category-lists">
-            <button onClick={() => displayCategoryQues(ques.id)}>
-              {ques.category}
-            </button>
-            {catQues && catQues.id === ques.id ? (
-              <div>
-                <p>{catQues.question.text}</p>
-                {catQues.shuffledAnswers.map((answer, index) => (
-                  <p key={index}>
-                    <input
-                      type="radio"
-                      name={`question-${ques.id}`}
-                      value={answer}
-                    />
-                    <label>{answer}</label>
-                  </p>
-                ))}
-              </div>
-            ) : null}
-            <br />
-          </label>
+          <button onClick={() => displayCategoryQues(ques.id)}>
+            {ques.category}
+          </button>
         ))}
       </div>
+      {catQues && (
+        <div className="questions-container">
+          <p>{catQues.question.text}</p>
+          {catQues.shuffledAnswers.map((answer, index) => (
+            <div key={index}>
+              <p>
+                <input
+                  type="radio"
+                  name={`question-${catQues.id}`}
+                  value={answer}
+                  // first the selectAnswer state is checked with the answer, wihtout clicking checked == false, thus radio is resetted
+                  checked={selectedAnswer === answer}
+                  onChange={handleSelectedanswers}
+                />
+                <label>{answer}</label>
+              </p> 
+            </div>
+          ))}
+          <button onClick={checkAnswer}>Check Answer</button>
+          {isCorrect !== null && (
+            <div className={`banner ${isCorrect ? "correct" : "incorrect"}`}>
+              {isCorrect ? "Correct!" : "Incorrect!"}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,15 @@
+.about-container {
+    display: flex;
+    background-color: #FDF5E6;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-container p {
+    margin: 0;
+}
+
+.about-container h1{
+    margin: 0;
+}
