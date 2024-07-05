@@ -5,7 +5,7 @@ function Navbar() {
         <div className="nav-container">
             <ul>
                 <li><a href="/about">About</a></li>
-                <li><a href="/questions">Questions</a></li>
+                <li><a href="/questions">Practice</a></li>
                 <li><a href="/startquiz">Start Quiz</a></li>
                 <li><a href="/support">Support</a></li>
                 <li><a href="">Logout</a></li>
